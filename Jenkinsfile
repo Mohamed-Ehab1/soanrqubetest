@@ -5,7 +5,7 @@ node {
   stage('SonarQube Analysis') {
     def scannerHome = tool 'suiiz';
     withSonarQubeEnv() {
-      sh "echo hello"
+      sh "sonar-scanner.sh"
     }
   }
 }
