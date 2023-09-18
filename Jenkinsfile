@@ -5,7 +5,7 @@ node {
   stage('SonarQube Analysis') {
     def scannerHome = tool 'suiiz';
     withSonarQubeEnv() {
-      sh "sonar-scanner"
+      sh "chmod +x sonar-scanner && sonar-scanner -Dsonar.projectKey=pytest -Dsonar.sources=."
     }
   }
 }
