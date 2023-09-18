@@ -1,5 +1,12 @@
 pipeline {
     agent any
+
+    tools {
+        // Define the SonarQube Scanner tool installation name
+        // Use the name you provided in the Global Tool Configuration
+        tool 'SonarQube Scanner'
+    }
+
     stages {
         stage('Checkout') {
             steps {
@@ -9,13 +16,15 @@ pipeline {
         }
         stage('SonarQube Scan') {
             steps {
-                withSonarQubeEnv('suiiz') {
-                    sh """
-                    #!/bin/bash
-                    sonar-scanner \
-                        -Dsonar.projectKey=pytest \
-                        -Dsonar.sources=.
-                    """
+                script {
+                    def scannerHome = tool 'suiiz'
+                    withEnv(["PATH+SONARSCANNER=${scannerHome}/bin"]) {
+                        sh """
+                        sonar-scanner \
+                            -Dsonar.projectKey=pytest \
+                            -Dsonar.sources=.
+                        """
+                    }
                 }
             }
         }
