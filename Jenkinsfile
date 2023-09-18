@@ -4,7 +4,7 @@ pipeline {
     tools {
         // Define the SonarQube Scanner tool installation name
         // Use the name you provided in the Global Tool Configuration
-        tool 'SonarQube Scanner'
+        tool 'suiiz'
     }
 
     stages {
