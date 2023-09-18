@@ -1,12 +1,6 @@
 pipeline {
     agent any
 
-    tools {
-        // Define the SonarQube Scanner tool installation name
-        // Use the name you provided in the Global Tool Configuration
-        tool 'suiiz'
-    }
-
     stages {
         stage('Checkout') {
             steps {
@@ -17,7 +11,7 @@ pipeline {
         stage('SonarQube Scan') {
             steps {
                 script {
-                    def scannerHome = tool 'suiiz'
+                    def scannerHome = tool name: 'suiiz', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
                     withEnv(["PATH+SONARSCANNER=${scannerHome}/bin"]) {
                         sh """
                         sonar-scanner \
