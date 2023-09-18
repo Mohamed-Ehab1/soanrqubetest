@@ -6,10 +6,11 @@ node {
     def scannerHome = tool 'suiiz'
     withSonarQubeEnv() {
       sh '''
-        echo "deb http://deb.debian.org/debian jessie-backports main" > /etc/apt/sources.list.d/jessie-backports.list && \
-        apt-get update && \
-        apt-get install -y -t jessie-backports openjdk-8-jre-headless ca-certificates-java && \
-        sonar-scanner
+        sonar-scanner \
+        -Dsonar.projectKey=pytest \
+        -Dsonar.sources=. \
+        -Dsonar.host.url=https://sonarqube.suiiz.net \
+        -Dsonar.token=sqp_72743c4c6d6d279e29ead1284261351b2c2dfc10
       '''
     }
   }
