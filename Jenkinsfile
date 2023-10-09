@@ -5,7 +5,7 @@ pipeline {
         stage('Checkout SCM') {
             steps {
                 // Clone the SimpleTest repository
-                checkout([$class: 'GitSCM', branches: [[name: '*/main']], userRemoteConfigs: [[url: 'https://github.com/Mohamed-Ehab1/newlaraveluntitest']]])
+                checkout([$class: 'GitSCM', branches: [[name: 'main']], userRemoteConfigs: [[url: 'https://github.com/Mohamed-Ehab1/newlaravelunittest']]])
             }
         }
 
@@ -13,7 +13,6 @@ pipeline {
             steps {
                 // Install Composer dependencies
                 sh 'composer install'
-                
             }
         }
 
@@ -29,16 +28,16 @@ pipeline {
                     def pr = github.getPullRequest(env.CHANGE_ID)
                     pr.createReview('Automated Jenkins Build', currentBuild.result, 'Automated Jenkins build result')
                 }
-            
             }
         }
         
         stage('Archive Artifacts') {
             steps {
-                archiveArtifacts artifacts: '.phpunit.result.cache', followSymlinks: false
+                archiveArtifacts artifacts: '**/phpunit.result.cache', allowEmptyArchive: true
             }
         }
     }
+    
     post {
         success {
             // Notify GitHub of a successful build
@@ -55,8 +54,8 @@ pipeline {
                 currentBuild.result = 'FAILURE'
                 def github = getGitHub()
                 def pr = github.getPullRequest(env.CHANGE_ID)
-                pr.createReview('Jenkins Build', 'REQUEST_CHANGES', 'Jenkins build failed. Please fix the issues.' currentBuild.result )
-            }successfully
+                pr.createReview('Jenkins Build', 'REQUEST_CHANGES', "Jenkins build failed. Please fix the issues. Result: ${currentBuild.result}")
+            }
         }
     }
 }
