@@ -5,7 +5,7 @@ pipeline {
         stage('Checkout SCM') {
             steps {
                 // Clone the SimpleTest repository
-                checkout([$class: 'GitSCM', branches: [[name: 'main']], userRemoteConfigs: [[url: 'https://github.com/Mohamed-Ehab1/newlaravelunittest']]])
+                checkout([$class: 'GitSCM', branches: [[name: 'main']], userRemoteConfigs: [[url: 'https://github.com/Mohamed-Ehab1/soanrqubetest']]])
             }
         }
 
