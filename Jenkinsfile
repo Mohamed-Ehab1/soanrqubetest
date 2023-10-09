@@ -12,7 +12,7 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 // Install Composer dependencies
-                 sh 'apt update && apt upgrade -y && apt install composer -y && composer install'
+                 sh 'composer install'
             }
         }
 
